@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --color-primary-dark: #120907;
+  --color-primary-brown: #1e100a;
+  --color-accent-gold: #e5c07b;
+  --color-muted-gold: #c5a880;
+  --color-luxury-cream: #faf5ef;
+  --color-glass-brown: rgba(28, 14, 10, 0.45);
+  --color-glass-light: rgba(250, 245, 239, 0.05);
+}
+
+/* Custom Base Styles */
+body {
+  background-color: #120907;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(30, 16, 10, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(229, 192, 123, 0.05) 0px, transparent 50%);
+  color: #faf5ef;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  margin: 0;
+  min-height: 100vh;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Light Mode Variables Override */
+body.light {
+  background-color: #faf5ef;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(243, 234, 225, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 115, 85, 0.08) 0px, transparent 50%);
+  color: #120907;
+}
+
+body.light {
+  --color-primary-dark: #faf5ef;
+  --color-primary-brown: #f3eae1;
+  --color-accent-gold: #b8860b;
+  --color-muted-gold: #8b7355;
+  --color-luxury-cream: #120907;
+  --color-glass-brown: rgba(243, 234, 225, 0.65);
+  --color-glass-light: rgba(18, 9, 7, 0.05);
+}
+
+/* Glassmorphism utility classes */
+.glass-effect {
+  background: rgba(28, 14, 10, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 192, 123, 0.15);
+}
+
+body.light .glass-effect {
+  background: rgba(243, 234, 225, 0.65);
+  border: 1px solid rgba(139, 115, 85, 0.15);
+}
+
+.gold-glow {
+  text-shadow: 0 0 10px rgba(229, 192, 123, 0.3);
+}
+
+body.light .gold-glow {
+  text-shadow: 0 0 10px rgba(139, 115, 85, 0.2);
+}
+
+.gold-glow-hover:hover {
+  text-shadow: 0 0 15px rgba(229, 192, 123, 0.6);
+}
+
+/* Smooth custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #120907;
+}
+body.light ::-webkit-scrollbar-track {
+  background: #faf5ef;
+}
+::-webkit-scrollbar-thumb {
+  background: #c5a880;
+  border-radius: 4px;
+}
+body.light ::-webkit-scrollbar-thumb {
+  background: #8b7355;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e5c07b;
+}
+body.light ::-webkit-scrollbar-thumb:hover {
+  background: #b8860b;
+}
+
+/* Hide default Vite layout stuff */
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: left;
+  border-inline: none;
+  min-height: auto;
+  display: block;
+}
+
+/* Custom Pinterest-like masonry classes */
+.masonry-grid {
+  display: flex;
+  margin-left: -16px; /* gutter size offset */
+  width: auto;
+}
+.masonry-grid_column {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style for 3D Perspective Container */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Circular Gallery Interactive Styles */
+.circular-gallery-item {
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  cursor: pointer;
+}
+
+.circular-gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed rgba(229, 192, 123, 0);
+  transition: transform 12s linear, border-color 0.4s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.circular-gallery-item:hover::before {
+  border-color: rgba(229, 192, 123, 0.4);
+  transform: rotate(360deg);
+  inset: -12px;
+}
+
+.circular-gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(229, 192, 123, 0);
+  transition: all 0.4s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.circular-gallery-item:hover::after {
+  border-color: #e5c07b;
+  box-shadow: 0 0 25px rgba(229, 192, 123, 0.35);
+  inset: -6px;
+}
+
+/* Glassmorphic details panel that overlays the image on hover */
+.circular-gallery-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(18, 9, 7, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1.5rem;
+  text-align: center;
+  z-index: 10;
+}
+
+body.light .circular-gallery-overlay {
+  background: rgba(250, 245, 239, 0.92);
+}
+
+.circular-gallery-item:hover .circular-gallery-overlay {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.circular-gallery-title {
+  font-family: var(--font-serif);
+  color: var(--color-luxury-cream);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .circular-gallery-title {
+    font-size: 1rem;
+  }
+}
+
+.circular-gallery-price {
+  color: var(--color-accent-gold);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .circular-gallery-price {
+    font-size: 1.2rem;
+  }
+}
+
+.circular-gallery-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.circular-gallery-btn {
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-glass-brown);
+  border: 1px solid rgba(229, 192, 123, 0.2);
+  color: var(--color-accent-gold);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-gallery-btn:hover {
+  background: var(--color-accent-gold);
+  color: var(--color-primary-dark);
+  border-color: var(--color-accent-gold);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(229, 192, 123, 0.4);
+}
+
+/* Infinite Marquee Scroll Animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 80s linear infinite;
+  gap: 2.5rem;
+  padding: 2rem 0;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+
