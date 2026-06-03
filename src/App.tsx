@@ -10,11 +10,14 @@ import { Menu } from './components/pages/Menu';
 import { About } from './components/pages/About';
 import { Gallery } from './components/pages/Gallery';
 import { Contact } from './components/pages/Contact';
+import { ProfileDashboard } from './components/pages/ProfileDashboard';
+import { AuthPage } from './components/pages/AuthPage';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { FloatingParticles } from './components/ui/FloatingParticles';
 import './App.css';
 
 const AppContent: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const { activeTab, setActiveTab } = useAuth();
   const [menuInitialCategory, setMenuInitialCategory] = useState<string | undefined>(undefined);
   const { cartCount, setIsCartOpen } = useCart();
 
@@ -31,6 +34,10 @@ const AppContent: React.FC = () => {
         return <Gallery />;
       case 'contact':
         return <Contact />;
+      case 'profile':
+        return <ProfileDashboard setActiveTab={setActiveTab} />;
+      case 'auth':
+        return <AuthPage setActiveTab={setActiveTab} />;
       default:
         return <Home setActiveTab={setActiveTab} setMenuInitialCategory={setMenuInitialCategory} />;
     }
@@ -89,9 +96,11 @@ const AppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <CartProvider>
-      <AppContent />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </AuthProvider>
   );
 };
 

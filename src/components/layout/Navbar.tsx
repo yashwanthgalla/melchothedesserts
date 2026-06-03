@@ -43,6 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
     { id: 'about', label: 'About' },
     { id: 'gallery', label: 'Gallery' },
     { id: 'contact', label: 'Contact' },
+    { id: 'profile', label: 'Dashboard' },
   ];
 
   return (

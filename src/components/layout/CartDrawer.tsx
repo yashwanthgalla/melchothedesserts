@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Plus, Minus, ShoppingBag, Send } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -14,6 +15,8 @@ export const CartDrawer: React.FC = () => {
     clearCart,
   } = useCart();
 
+  const { isAuthenticated, setActiveTab } = useAuth();
+
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [diningMode, setDiningMode] = useState<'takeaway' | 'dinein'>('takeaway');
@@ -21,6 +24,13 @@ export const CartDrawer: React.FC = () => {
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0) return;
+
+    if (!isAuthenticated) {
+      setIsCartOpen(false);
+      setActiveTab('auth');
+      alert('Please log in or register to complete your order.');
+      return;
+    }
 
     // Construct formatted text message for WhatsApp API
     const businessNumber = '919876543211'; // Café WhatsApp number
